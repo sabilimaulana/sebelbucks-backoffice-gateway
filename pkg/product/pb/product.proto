@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package product;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/Empty.proto";
+
+option go_package = "./pkg/product/pb";
+
+// Declare service
+service ProductService{
+  // Product
+  rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
+  rpc ListProduct (google.protobuf.Empty) returns (ListProductResponse);
+  rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse);
+  // Variant
+  rpc CreateVariant (CreateVariantRequest) returns (CreateVariantResponse);
+  rpc ListVariant (google.protobuf.Empty) returns (ListVariantResponse);
+}
+
+// Product
+message Product {
+  int64 id = 1;
+  string name = 2;
+  string slug = 3;
+  string description = 4;
+  int64 stock= 5;
+  int64 price = 6;
+  google.protobuf.Timestamp createdAt = 7;
+  google.protobuf.Timestamp updatedAt = 8;
+}
+
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  int64 stock= 3;
+  int64 price = 4;
+}
+
+message CreateProductResponse {
+  int64 status = 1;
+  string error = 2;
+  int64 productId = 3;
+}
+
+message ListProductResponse{
+  int64 status = 1;
+  string error = 2;
+  repeated Product products = 3;
+}
+
+message DeleteProductRequest{
+  int64 id = 1;
+}
+
+message DeleteProductResponse{
+  int64 status = 1;
+  string error = 2;
+}
+
+// Variant
+message Variant {
+  int64 id = 1;
+  string name = 2;
+  string description = 4;
+  int64 stock= 5;
+  int64 price = 6;
+  google.protobuf.Timestamp createdAt = 7;
+  google.protobuf.Timestamp updatedAt = 8;
+}
+
+message CreateVariantRequest {
+  string name = 1;
+  string description = 2;
+  int64 stock= 3;
+  int64 price = 4;
+}
+
+message CreateVariantResponse {
+  int64 status = 1;
+  string error = 2;
+  int64 variantId = 3;
+}
+
+message ListVariantResponse {
+  int64 status = 1;
+  string error = 2;
+  repeated Variant variants = 3;
+}
